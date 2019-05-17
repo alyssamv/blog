@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors on Name Unknown</title>
+    <link>/authors/</link>
+    <description>Recent content in Authors on Name Unknown</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 05 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>/authors/admin/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/admin/</guid>
+      <description>Alyssa Vanderbeek is a Master&amp;rsquo;s student in Biostatistics at the Columbia University Mailman School of Public Health in New York City. Research interests include improving efficiencies in oncology drug development, development software and algorithms to advance clinical research, and exploring and visualizing data.</description>
+    </item>
+    
+    <item>
+      <title>Brian M. Alexander</title>
+      <link>/authors/brian-m.-alexander/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/brian-m.-alexander/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Geoffrey Fell</title>
+      <link>/authors/geoffrey-fell/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/geoffrey-fell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Giovanni Parmigiani</title>
+      <link>/authors/giovanni-parmigiani/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/giovanni-parmigiani/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lorenzo Trippa</title>
+      <link>/authors/lorenzo-trippa/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/lorenzo-trippa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Patrick Wen</title>
+      <link>/authors/patrick-wen/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/patrick-wen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rifaquat Rahman</title>
+      <link>/authors/rifaquat-rahman/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/rifaquat-rahman/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Robert Redd</title>
+      <link>/authors/robert-redd/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/robert-redd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Steffen Ventz</title>
+      <link>/authors/steffen-ventz/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/steffen-ventz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tianqi Chen</title>
+      <link>/authors/tianqi-chen/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/tianqi-chen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Timothy Cloughesy</title>
+      <link>/authors/timothy-cloughesy/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/timothy-cloughesy/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Name Unknown</title>
+    <link>/authors/admin/</link>
+    <description>Recent content on Name Unknown</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 05 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Display Jupyter Notebooks with Academic</title>
+      <link>/post/jupyter/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/jupyter/</guid>
+      <description>Learn how to blog in Academic using Jupyter notebooks</description>
+    </item>
+    
+    <item>
+      <title>The clinical trials landscape for glioblastoma: is it adequate to develop new treatments?</title>
+      <link>/publication/gbm_meta-analysis1/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/publication/gbm_meta-analysis1/</guid>
+      <description>We examined the landscape of trials in glioblastoma registered on ClinicalTrials.gov between 2005-2016. Our findings show low patient enrollment, long trial duration, disproportionate allocation of patient to unsuccessful phase III trials, and lack of randomization in phase II.</description>
+    </item>
+    
+    <item>
+      <title>Academic: the website builder for Hugo</title>
+      <link>/post/getting-started/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/getting-started/</guid>
+      <description>Create a beautifully simple website in under 10 minutes.</description>
+    </item>
+    
+    <item>
+      <title>Divining responder populations from survival data</title>
+      <link>/publication/diving-responder-pops/</link>
+      <pubDate>Tue, 01 Sep 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/publication/diving-responder-pops/</guid>
+      <description>We simulated Kaplan-Meier survival curves with varying prognostic and predictive biomarker subgroups to understand whether KM curve shape might be an indicator of underlying patient heterogeneity.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/authors/admin/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/admin/</guid>
+      <description>Alyssa Vanderbeek is a Master&amp;rsquo;s student in Biostatistics at the Columbia University Mailman School of Public Health in New York City. Research interests include improving efficiencies in oncology drug development, development software and algorithms to advance clinical research, and exploring and visualizing data.</description>
+    </item>
+    
+  </channel>
+</rss>

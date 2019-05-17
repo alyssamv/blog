@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Robert Redd on Name Unknown</title>
+    <link>/authors/robert-redd/</link>
+    <description>Recent content in Robert Redd on Name Unknown</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 01 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/authors/robert-redd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The clinical trials landscape for glioblastoma: is it adequate to develop new treatments?</title>
+      <link>/publication/gbm_meta-analysis1/</link>
+      <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/publication/gbm_meta-analysis1/</guid>
+      <description>We examined the landscape of trials in glioblastoma registered on ClinicalTrials.gov between 2005-2016. Our findings show low patient enrollment, long trial duration, disproportionate allocation of patient to unsuccessful phase III trials, and lack of randomization in phase II.</description>
+    </item>
+    
+  </channel>
+</rss>

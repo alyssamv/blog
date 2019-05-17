@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Projects on Name Unknown</title>
-    <link>/project/</link>
-    <description>Recent content in Projects on Name Unknown</description>
+    <title>Drug development on Name Unknown</title>
+    <link>/tags/drug-development/</link>
+    <description>Recent content in Drug development on Name Unknown</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 27 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/drug-development/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>/project/drug-dev-resources/</guid>
       <description>A collection of code and publications related to drug development in oncology that I have collected.</description>
-    </item>
-    
-    <item>
-      <title>iAdapt</title>
-      <link>/project/internal-project/</link>
-      <pubDate>Sat, 27 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/project/internal-project/</guid>
-      <description>An R package for simulating and implementing an early-phase adaptive dose-finding design.</description>
     </item>
     
   </channel>

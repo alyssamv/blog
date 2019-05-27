@@ -6,17 +6,44 @@
     <description>Recent content in Categories on Name Unknown</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 27 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>R</title>
-      <link>/categories/r/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <title>TidyTuesday</title>
+      <link>/categories/tidytuesday/</link>
+      <pubDate>Mon, 27 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/categories/r/</guid>
+      <guid>/categories/tidytuesday/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>clinical trials</title>
+      <link>/categories/clinical-trials/</link>
+      <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/clinical-trials/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>drug development</title>
+      <link>/categories/drug-development/</link>
+      <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/drug-development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>oncology</title>
+      <link>/categories/oncology/</link>
+      <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/oncology/</guid>
       <description></description>
     </item>
     

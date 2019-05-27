@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Name Unknown</title>
-    <link>/post/</link>
-    <description>Recent content in Posts on Name Unknown</description>
+    <title>TidyTuesday on Name Unknown</title>
+    <link>/tags/tidytuesday/</link>
+    <description>Recent content in TidyTuesday on Name Unknown</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 27 May 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/tidytuesday/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>/post/tidytuesday-global-plastic-waste-management/</guid>
       <description>A few weeks ago I began participating is R’s community TidyTuesday; a community-based data visualization challenge, where a new dataset is released on Tuesday and participants are invited to create visualizations in the tidyverse. I’ve only participated a few times, but have learned so much already from seeing others’ figures and analysis routes, following along with code, and getting feedback. Twitter proves once again to be an excellent learning tool.</description>
-    </item>
-    
-    <item>
-      <title>Survey of early phase trial designs in oncology</title>
-      <link>/post/survey-of-early-phase-trial-designs-in-oncology/</link>
-      <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/survey-of-early-phase-trial-designs-in-oncology/</guid>
-      <description>After a few years of working with clinical trial methodology, I finally decided to put together a introductory guide to common trial designs seen in oncology drug development. The goal here is to provide (1) a brief summary of each phase and the common designs used, (2) some of the most popular areas of interest (eg randomization) and new methods that aim to address them, and (3) a summary of the biggest issues that clinicians/statisticians face in testing new agents.</description>
     </item>
     
   </channel>

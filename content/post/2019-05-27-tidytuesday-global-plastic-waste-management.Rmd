@@ -10,9 +10,9 @@ image:
   focal_point: ''
 ---
 
-A few weeks ago I began participating is R's community [TidyTuesday](https://github.com/rfordatascience/tidytuesday); a community-based data visualization challenge, where a new dataset is released on Tuesday and participants are invited to create visualizations in the tidyverse. I've only participated a few times, but have learned so much already from seeing others' figures and analysis routes, following along with code, and getting feedback. Twitter proves once again to be an excellent learning tool. 
+A few weeks ago I began participating in R's community [TidyTuesday](https://github.com/rfordatascience/tidytuesday); a community-based data visualization challenge, where a new dataset is released on Tuesday and participants are invited to create visualizations in the tidyverse. I've only participated a few times, but have learned so much already from seeing others' figures and analysis routes, following along with code, and getting feedback. Twitter proves once again to be an excellent learning tool. 
 
-This past week's dataset looked at global plastic waste (mis)management. Below I provide some of the code and figures I produced in exploring this data. As always, I wish the dataset provided us with even more information to wade through. Although, part of the fun is coming up with meaningful analysis from seemingly few variables. My code is avaiable [here](https://github.com/alyssamv/tidytuesdays/blob/master/2019/GlobalWaste_0521/GlobalWaste.Rmd).
+This past week's dataset looked at global plastic waste (mis)management. Below I provide some of the code and figures I produced in exploring this data. As always, I wish the dataset provided us with even more information to wade through. Although, part of the fun is coming up with meaningful analysis from seemingly few variables. My code is available [here](https://github.com/alyssamv/tidytuesdays/blob/master/2019/GlobalWaste_0521/GlobalWaste.Rmd).
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, warning = F, message = F)
@@ -146,24 +146,39 @@ This figure also gives us some information about the distribution of population 
 
 Next I started to look at the data on waste, and specifically the relationship between waste management and GDP/population. "Mismanaged waste" is defined by [Our World in Data](https://ourworldindata.org/plastic-pollution), the data source, as "material which is either littered or inadequately disposed". First I plotted some scatterplots to get a feel for the association (if any). Below, we can see that the trend if such that richer countries have less waste per capita.
 
-```{r}
+```{r, fig.height=10, fig.width=7}
 # relationship between per capita plastic waste (all) vs GDP per capita
-p1 = ggplot(waste, aes(x = per_capita_plastic, y = gdp_per_capita)) +
+p1 = ggplot(waste, aes(y = log(per_capita_plastic), 
+                       x = log(gdp_per_capita), 
+                       size = total_population_gapminder,
+                       color = continent)) +
   geom_point() +
+  scale_color_calc() +
   theme_bw() +
-  labs(x = "All plastic waste per capita",
-       y = "GDP per capita")
+  labs(y = "All plastic waste per capita (log-scale)",
+       x = "GDP per capita (log-scale)",
+       title = "Richer companies have more plastic waste per capita, but\nless of it is mismanaged than in poorer countries.") +
+  theme(legend.position = "none",
+        plot.title = element_text(face = "bold"))
 
 # relationship between per capita plastic waste (all) vs GDP per capita
-p2 = ggplot(waste, aes(x = mismanaged_waste_percap, y = gdp_per_capita)) +
+p2 = ggplot(waste, aes(y = log(mismanaged_waste_percap), 
+                       x = log(gdp_per_capita), 
+                       size = total_population_gapminder,
+                       color = continent)) +
   geom_point() +
+  scale_color_calc() +
   theme_bw() +
-  labs(x = "Mismanaged plastic waste per capita",
-       y = "GDP per capita")
+  labs(y = "Mismanaged plastic waste per capita (log-scale)",
+       x = "GDP per capita (log-scale)",
+       size = "Total population",
+       color = "Continent") +
+  theme(legend.position = "bottom",
+        plot.title = element_text(size = 15, face = "bold"))
 
 cowplot::plot_grid(p1, p2, 
-                   ncol = 2, 
-                   labels = "AUTO")
+                   nrow = 2, 
+                   rel_widths = c(1, 1.44))
 
 ## From this we cal see that there is a trend such that richer countries have less per capita waste (all waste and mismanaged).
 ```
@@ -236,7 +251,7 @@ world %>%
 
 ```
 
-Finally, within each country, what percentage of their total plastic waste is being mismanaged? Does this also correspond to a country's wealth? I decided to look at a scatterplot with overlaid boxplots across continents and levels of wealth (percentiles of GDP). It looks like the higher a country's GDP per cpita, the less of its plastic is being mismanaged.
+Finally, within each country, what percentage of their total plastic waste is being mismanaged? Does this also correspond to a country's wealth? I decided to look at a scatterplot with overlaid boxplots across continents and levels of wealth (percentiles of GDP). It looks like the higher a country's GDP per capita, the less of its plastic is being mismanaged.
 
 ```{r boxplots, fig.height=7, fig.width=10}
 countries %>%

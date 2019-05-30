@@ -1,0 +1,367 @@
+---
+title: 'TidyTuesday: Wine Ratings'
+author: ~
+date: '2019-05-29'
+slug: tidytuesday-wine-ratings
+categories: ["TidyTuesday"]
+tags: ["TidyTuesday"]
+image:
+  caption: ''
+  focal_point: ''
+---
+
+I finished my first year of grad school two weeks ago and I've been enjoying the break before my summer work starts next Monday. As part of this time off, I've been able to devote a good bit of time to the Tidy Tuesday datasets and learning new figures and vizualization tools - my extracurriculars. This week's dataset was about 130k wine tasting ratings. 
+
+There was a lot of potential in this dataset, which includes information for each wine regarding its anem and variety, country, county/province, and other region of production, price per bottle, rating (on a scale from 0-100, but only wines with ratings above 80 are given), the name and Twitter handle of the wine taster, and notes from the taster based on their thoughts. 
+
+I began by examining the distributions of each continuous variable, as well as some of the unique entries for the character variables (country, variety, etc). I found that there are 44 countries, 426 provinces, 19 different tasters, and 707 listed varieties of wine. I would love to classify these wines by white/red/rose/blends, but the length of this list was too long to do manually. Instead of finding another dataset for this purpose or using regex to help me, I looked at visualizing other variables.
+
+Code for all plots are given below, and full code on my data exploration and viz process can be found [here.](https://github.com/alyssamv/tidytuesdays/blob/master/2019/WineRatings_0528/WineRatings.Rmd)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = F, message = F)
+
+library(tidyverse)
+library(ggthemes)
+library(treemapify)
+library(kableExtra)
+library(formattable)
+library(condformat)
+library(ggalluvial)
+library(GGally)
+```
+
+
+
+```{r data}
+wine_ratings <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-28/winemag-data-130k-v2.csv") %>%
+  dplyr::select(-1)
+```
+
+```{r}
+# number of wines by country
+n_wines = wine_ratings %>%
+  select(country, designation) %>%
+  distinct() %>%
+  group_by(country) %>%
+  summarise(wines = n()) %>%
+  arrange(desc(wines)) %>%
+  mutate(tier = ifelse(wines > 1000, 1, 
+                       ifelse(wines < 100, 3, 2)))
+```
+
+```{r}
+# country-wise average price
+wine_ratings = wine_ratings %>%
+  group_by(country) %>%
+  mutate(med_price = median(price, na.rm = T),
+         med_rating = median(points, na.rm = T)) %>%
+  ungroup() %>%
+  filter(!is.na(med_price)) %>%
+  left_join(n_wines, by = "country")
+
+global_median_price <- median(wine_ratings$med_price)
+
+```
+
+```{r}
+# taster ratings
+taster_ratings_tier = wine_ratings %>%
+  left_join(n_wines[,1:2], by = "country") %>%
+  group_by(taster_name, tier) %>%
+  summarise(n = n(),
+            avg_rating = mean(points)) 
+```
+
+I've been reading Wilke's *Fundamentals of Data Visualization* at the suggestion of a friend on Twitter, and got some great inspiration and tips for processing and conveying data. I thought I'd give myself a shot at a treemap (below), where I show the number of wines presented by each country at this tasting event. The US has the most with over 14,000 wines, followed by France and Italy. Additionally, I grouped countries into wine-production tiers based on these numbers; Tier 1 includes countries with more than 1,000 wines; Tier 2 is countries with between 100 and 1,000; Tier 3 is countries with less than 100 wines. I'm not a huge fan of this type of visualization personally, but thought I'd try my hand at it since it's new to me.
+
+I was a bit surprised to see that the US leads with such grandeur in this count, but I suppose the wine competition (tasting? event?) was hosted in the US. I typically think of Italy and France as the wine capitals of the world.
+
+```{r treemap, eval = T, fig.height=6, fig.width=8}
+ggplot(n_wines, aes(area = wines, fill = wines, label = country,
+                    subgroup = tier)) +
+  treemapify::geom_treemap() +
+  geom_treemap_text(colour = "white", 
+                    place = "centre", 
+                    grow = TRUE) +
+  geom_treemap_subgroup_border(color = "black") +
+  #scale_fill_gradient2(midpoint = 43, low = "maroon", high = "blue") +
+  labs(fill = "Number of wines",
+       title = "The US, France, and Italy produce the majority of wines being rated.",
+       subtitle = "Out of 44 countries, the US leads with 14,184 wines, followed by Italy (6,710) and France (6,213.\nChina, Egypt, Armenia, and Slovakia each produced one wine.",
+    caption = "Data Source: WineEnthusiast \nTwitter: @VanderbeekAM "
+    ) +
+  theme(plot.title = element_text(size = 15, face = "bold"))
+```
+
+Next, I look at the distribution of wine ratings by country, for the top 10 wine-produing countries. The global median rating was 88/100. The US, Italy, and Portugal all seem to fall in line with this, with some highly rated outliers. Austria, Germany, and Australia standout as having a higher median wine rating.
+
+```{r ratings_dist, fig.height=10, fig.width=7}
+wine_ratings %>%
+  filter(country %in% n_wines$country[1:10]) %>% 
+  arrange(desc(wines)) %>%
+  mutate(country = reorder(as.factor(country), wines)) %>% 
+  ggplot(aes(y = points, x = country, fill = country)) +
+  geom_violin() +
+  geom_point(aes(y = med_rating)) +
+  geom_hline(yintercept = median(wine_ratings$points), linetype = "dashed") +
+  viridis::scale_fill_viridis(discrete = T, alpha = 0.9) +
+  labs(
+    y = "Rating",
+    x = NULL,
+    title = "Distribution of wine ratings for the top 10 wine producers.",
+    subtitle = "Countries are sorted by number of wines produced for the top 10 producing countries.\nThe dashed line designates the global median rating (88).",
+    caption = "Data Source: WineEnthusiast \nTwitter: @VanderbeekAM "
+    ) +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 10, face = "bold"),
+        axis.text.x = element_text(size = 12),
+        plot.title = element_text(size = 15, face = "bold"))
+```
+
+Along with the distribution of ratings, price is also of interest. The distribution of prices was highly skewed, even in log-scale. The median price of a bottle of wine was \$28, but still a handful of wines exceeded $1000. Again for each country, broken down by tier (as defined above), the prices are distributed as shown below. Tier 1 seems most responsible for the skewness mentioned, with many outliers. Meanwhile, Tier 3 has tighter distribution, albeit with fewer wines by definition.
+
+```{r prices_dist, fig.height=10, fig.width=7}
+wine_ratings %>%
+  mutate(country = fct_reorder(country, med_price)) %>%
+  filter(country != "NA") %>%
+  ggplot(aes(y = log(price), x = country, fill = "grey")) +
+  geom_boxplot() +
+  geom_hline(yintercept = log(global_median_price)) +
+  scale_fill_identity() +
+  scale_x_discrete()  +
+#  annotate("text", y = 6, x = 30, label = "test") +
+  facet_grid(tier~., scales = "free_y", space = "free_y") +
+  theme_bw() +
+  labs(
+    x = NULL,
+    y = "Bottle price (log-scale)",
+    title = "The global median price of a bottle of wine is $28.",
+    subtitle = "The distribution of wine price by country is shown below in log-scale. Note how the\nmajority of each country's price distribution falls below the global median, even in log-scale. Countries that produce more wine (Tier 1) are most responsible for this skew.",
+    caption = "Data Source: WineEnthusiast \nTwitter: @VanderbeekAM "
+  ) +
+  coord_flip() +
+  theme(plot.title = element_text(size = 15, face = "bold"),
+        plot.subtitle = element_text(size = 9),
+        axis.text.y = element_text(size = 10, face = "bold"),
+        panel.grid = element_blank())
+
+```
+
+Lastly, I was interested in how the ratings break down by the taster; do some tasters rate wines on average higher than others? The table shows us that, yes, they do.
+
+
+```{r}
+plot_table = taster_ratings_tier %>%
+  group_by(taster_name, tier) %>%
+  summarise(n = n(),
+            avg_rating = mean(points)) %>%
+  select(-avg_rating) %>%
+  spread(key = tier, value = n, fill = "--") %>%
+  left_join(taster_ratings_tier %>%
+              select(-n) %>%
+              mutate(avg_rating = round(avg_rating, 2)) %>%
+              spread(key = tier, value = avg_rating, fill = "--"), 
+            by = "taster_name") %>%
+  left_join(wine_ratings %>%
+              left_join(n_wines, by = "country") %>%
+              group_by(taster_name) %>%
+              summarise(n = n(),
+                        avg_rating = round(mean(points), 2)),
+            by = "taster_name") %>%
+  mutate(`1.x` = ifelse(`1.y` == "--", `1.y`, paste0(`1.y`, "\n(", `1.x`, ")")),
+         `2.x` = ifelse(`2.y` == "--", `2.y`, paste0(`2.y`, "\n(", `2.x`, ")")),
+         `3.x` = ifelse(`3.y` == "--", `3.y`, paste0(`3.y`, "\n(", `3.x`, ")")),
+         n = ifelse(avg_rating == "--", avg_rating, paste0(avg_rating, "\n(", n, ")"))) %>%
+  arrange(desc(n)) %>%
+  `colnames<-`(c("Taster", "Tier 1", "Tier 2", "Tier 3", "one", "two", "three" , "Overall average rating", "overall_r")) 
+
+condformat(plot_table) %>%
+  rule_fill_gradient(columns = `Tier 1`, 
+                     expression = as.numeric(one), 
+                     #limits = c(1, 25537), 
+                     low = "lightgoldenrod1", 
+                     high = "indianred") %>%
+  rule_fill_gradient(columns = `Tier 2`, 
+                     expression = as.numeric(two), 
+                     #limits = c(1, 25537), 
+                     low = "lightgoldenrod1", 
+                     high = "indianred") %>%
+  rule_fill_gradient(columns = `Tier 3`, 
+                     expression = as.numeric(three), 
+                     #limits = c(1, 25537), 
+                     low = "lightgoldenrod1", 
+                     high = "indianred") %>%
+  rule_fill_gradient(columns = `Overall average rating`, 
+                     expression = as.numeric(overall_r), 
+                     #limits = c(1, 26244), 
+                     low = "lightgoldenrod1", 
+                     high = "indianred") %>%
+  show_columns(columns = c(8, 1, 2:4)) %>%
+  theme_htmlTable(caption = "Average ratings by tasters. Tiers are defined by the number of wines contributed (by country). The number of wines tasted by the taster is given in parentheses. A total of 129,971 wines were rated in the dataset: 96,137 in Tier 1 (producing more than 1,000 wines); 31,267 in Tier 2 (producing between 100 and 1,000 wines); 2,567 in Tier 3 (producing less than 100 wines). Tier 1 wines seem to have higher average ratings than lower tiers, though these differences are slight.")
+
+```
+
+
+### Code:
+
+```{r, eval=F, echo=T}
+
+library(tidyverse)
+library(ggthemes)
+library(treemapify)
+library(kableExtra)
+library(formattable)
+library(condformat)
+library(ggalluvial)
+library(GGally)
+
+wine_ratings <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-28/winemag-data-130k-v2.csv") %>%
+  dplyr::select(-1)
+
+# number of wines by country
+n_wines = wine_ratings %>%
+  select(country, designation) %>%
+  distinct() %>%
+  group_by(country) %>%
+  summarise(wines = n()) %>%
+  arrange(desc(wines)) %>%
+  mutate(tier = ifelse(wines > 1000, 1, 
+                       ifelse(wines < 100, 3, 2)))
+
+# country-wise average price
+wine_ratings = wine_ratings %>%
+  group_by(country) %>%
+  mutate(med_price = median(price, na.rm = T),
+         med_rating = median(points, na.rm = T)) %>%
+  ungroup() %>%
+  filter(!is.na(med_price)) %>%
+  left_join(n_wines, by = "country")
+
+global_median_price <- median(wine_ratings$med_price)
+
+# taster ratings
+taster_ratings_tier = wine_ratings %>%
+  left_join(n_wines[,1:2], by = "country") %>%
+  group_by(taster_name, tier) %>%
+  summarise(n = n(),
+            avg_rating = mean(points)) 
+
+## treemap
+ggplot(n_wines, aes(area = wines, fill = wines, label = country,
+                    subgroup = tier)) +
+  treemapify::geom_treemap() +
+  geom_treemap_text(colour = "white", 
+                    place = "centre", 
+                    grow = TRUE) +
+  geom_treemap_subgroup_border(color = "black") +
+  #scale_fill_gradient2(midpoint = 43, low = "maroon", high = "blue") +
+  labs(fill = "Number of wines",
+       title = "The US, France, and Italy produce the majority of wines being rated.",
+       subtitle = "Out of 44 countries, the US leads with 14,184 wines, followed by Italy (6,710) and France (6,213.\nChina, Egypt, Armenia, and Slovakia each produced one wine.",
+    caption = "Data Source: WineEnthusiast \nTwitter: @VanderbeekAM "
+    ) +
+  theme(plot.title = element_text(size = 15, face = "bold"))
+
+# violin plot of ratings by country
+wine_ratings %>%
+  filter(country %in% n_wines$country[1:10]) %>% 
+  arrange(desc(wines)) %>%
+  mutate(country = reorder(as.factor(country), wines)) %>% 
+  ggplot(aes(y = points, x = country, fill = country)) +
+  geom_violin() +
+  geom_point(aes(y = med_rating)) +
+  geom_hline(yintercept = median(wine_ratings$points), linetype = "dashed") +
+  viridis::scale_fill_viridis(discrete = T, alpha = 0.9) +
+  labs(
+    y = "Rating",
+    x = NULL,
+    title = "Distribution of wine ratings for the top 10 wine producers.",
+    subtitle = "Countries are sorted by number of wines produced for the top 10 producing countries.\nThe dashed line designates the global median rating (88).",
+    caption = "Data Source: WineEnthusiast \nTwitter: @VanderbeekAM "
+    ) +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text.y = element_text(size = 10, face = "bold"),
+        axis.text.x = element_text(size = 12),
+        plot.title = element_text(size = 15, face = "bold"))
+
+# boxplot of prices by country and tier
+wine_ratings %>%
+  mutate(country = fct_reorder(country, med_price)) %>%
+  filter(country != "NA") %>%
+  ggplot(aes(y = log(price), x = country, fill = "grey")) +
+  geom_boxplot() +
+  geom_hline(yintercept = log(global_median_price)) +
+  scale_fill_identity() +
+  scale_x_discrete()  +
+#  annotate("text", y = 6, x = 30, label = "test") +
+  facet_grid(tier~., scales = "free_y", space = "free_y") +
+  theme_bw() +
+  labs(
+    x = NULL,
+    y = "Bottle price (log-scale)",
+    title = "The global median price of a bottle of wine is $28.",
+    subtitle = "The distribution of wine price by country is shown below in log-scale. Note how the\nmajority of each country's price distribution falls below the global median, even in log-scale. Countries that produce more wine (Tier 1) are most responsible for this skew.",
+    caption = "Data Source: WineEnthusiast \nTwitter: @VanderbeekAM "
+  ) +
+  coord_flip() +
+  theme(plot.title = element_text(size = 15, face = "bold"),
+        plot.subtitle = element_text(size = 9),
+        axis.text.y = element_text(size = 10, face = "bold"),
+        panel.grid = element_blank())
+
+# table of ratings by taster
+plot_table = taster_ratings_tier %>%
+  group_by(taster_name, tier) %>%
+  summarise(n = n(),
+            avg_rating = mean(points)) %>%
+  select(-avg_rating) %>%
+  spread(key = tier, value = n, fill = "--") %>%
+  left_join(taster_ratings_tier %>%
+              select(-n) %>%
+              mutate(avg_rating = round(avg_rating, 2)) %>%
+              spread(key = tier, value = avg_rating, fill = "--"), 
+            by = "taster_name") %>%
+  left_join(wine_ratings %>%
+              left_join(n_wines, by = "country") %>%
+              group_by(taster_name) %>%
+              summarise(n = n(),
+                        avg_rating = round(mean(points), 2)),
+            by = "taster_name") %>%
+  mutate(`1.x` = ifelse(`1.y` == "--", `1.y`, paste0(`1.y`, "\n(", `1.x`, ")")),
+         `2.x` = ifelse(`2.y` == "--", `2.y`, paste0(`2.y`, "\n(", `2.x`, ")")),
+         `3.x` = ifelse(`3.y` == "--", `3.y`, paste0(`3.y`, "\n(", `3.x`, ")")),
+         n = ifelse(avg_rating == "--", avg_rating, paste0(avg_rating, "\n(", n, ")"))) %>%
+  arrange(desc(n)) %>%
+  `colnames<-`(c("Taster", "Tier 1", "Tier 2", "Tier 3", "one", "two", "three" , "Overall average rating", "overall_r")) 
+
+condformat(plot_table) %>%
+  rule_fill_gradient(columns = `Tier 1`, 
+                     expression = as.numeric(one), 
+                     #limits = c(1, 25537), 
+                     low = "lightgoldenrod1", 
+                     high = "indianred") %>%
+  rule_fill_gradient(columns = `Tier 2`, 
+                     expression = as.numeric(two), 
+                     #limits = c(1, 25537), 
+                     low = "lightgoldenrod1", 
+                     high = "indianred") %>%
+  rule_fill_gradient(columns = `Tier 3`, 
+                     expression = as.numeric(three), 
+                     #limits = c(1, 25537), 
+                     low = "lightgoldenrod1", 
+                     high = "indianred") %>%
+  rule_fill_gradient(columns = `Overall average rating`, 
+                     expression = as.numeric(overall_r), 
+                     #limits = c(1, 26244), 
+                     low = "lightgoldenrod1", 
+                     high = "indianred") %>%
+  show_columns(columns = c(8, 1, 2:4)) %>%
+  theme_htmlTable(caption = "Average ratings by tasters. Tiers are defined by the number of wines contributed (by country). The number of wines tasted by the taster is given in parentheses. A total of 129,971 wines were rated in the dataset: 96,137 in Tier 1 (producing more than 1,000 wines); 31,267 in Tier 2 (producing between 100 and 1,000 wines); 2,567 in Tier 3 (producing less than 100 wines). Tier 1 wines seem to have higher average ratings than lower tiers, though these differences are slight.")
+
+
+```

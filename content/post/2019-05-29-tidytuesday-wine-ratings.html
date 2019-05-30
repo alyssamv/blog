@@ -1,0 +1,612 @@
+---
+title: 'TidyTuesday: Wine Ratings'
+author: ~
+date: '2019-05-29'
+slug: tidytuesday-wine-ratings
+categories: ["TidyTuesday"]
+tags: ["TidyTuesday"]
+image:
+  caption: ''
+  focal_point: ''
+---
+
+
+
+<p>I finished my first year of grad school two weeks ago and I’ve been enjoying the break before my summer work starts next Monday. As part of this time off, I’ve been able to devote a good bit of time to the Tidy Tuesday datasets and learning new figures and vizualization tools - my extracurriculars. This week’s dataset was about 130k wine tasting ratings.</p>
+<p>There was a lot of potential in this dataset, which includes information for each wine regarding its anem and variety, country, county/province, and other region of production, price per bottle, rating (on a scale from 0-100, but only wines with ratings above 80 are given), the name and Twitter handle of the wine taster, and notes from the taster based on their thoughts.</p>
+<p>I began by examining the distributions of each continuous variable, as well as some of the unique entries for the character variables (country, variety, etc). I found that there are 44 countries, 426 provinces, 19 different tasters, and 707 listed varieties of wine. I would love to classify these wines by white/red/rose/blends, but the length of this list was too long to do manually. Instead of finding another dataset for this purpose or using regex to help me, I looked at visualizing other variables.</p>
+<p>Code for all plots are given below, and full code on my data exploration and viz process can be found <a href="https://github.com/alyssamv/tidytuesdays/blob/master/2019/WineRatings_0528/WineRatings.Rmd">here.</a></p>
+<p>I’ve been reading Wilke’s <em>Fundamentals of Data Visualization</em> at the suggestion of a friend on Twitter, and got some great inspiration and tips for processing and conveying data. I thought I’d give myself a shot at a treemap (below), where I show the number of wines presented by each country at this tasting event. The US has the most with over 14,000 wines, followed by France and Italy. Additionally, I grouped countries into wine-production tiers based on these numbers; Tier 1 includes countries with more than 1,000 wines; Tier 2 is countries with between 100 and 1,000; Tier 3 is countries with less than 100 wines. I’m not a huge fan of this type of visualization personally, but thought I’d try my hand at it since it’s new to me.</p>
+<p>I was a bit surprised to see that the US leads with such grandeur in this count, but I suppose the wine competition (tasting? event?) was hosted in the US. I typically think of Italy and France as the wine capitals of the world.</p>
+<p><img src="/post/2019-05-29-tidytuesday-wine-ratings_files/figure-html/treemap-1.png" width="768" /></p>
+<p>Next, I look at the distribution of wine ratings by country, for the top 10 wine-produing countries. The global median rating was 88/100. The US, Italy, and Portugal all seem to fall in line with this, with some highly rated outliers. Austria, Germany, and Australia standout as having a higher median wine rating.</p>
+<p><img src="/post/2019-05-29-tidytuesday-wine-ratings_files/figure-html/ratings_dist-1.png" width="672" /></p>
+<p>Along with the distribution of ratings, price is also of interest. The distribution of prices was highly skewed, even in log-scale. The median price of a bottle of wine was $28, but still a handful of wines exceeded $1000. Again for each country, broken down by tier (as defined above), the prices are distributed as shown below. Tier 1 seems most responsible for the skewness mentioned, with many outliers. Meanwhile, Tier 3 has tighter distribution, albeit with fewer wines by definition.</p>
+<p><img src="/post/2019-05-29-tidytuesday-wine-ratings_files/figure-html/prices_dist-1.png" width="672" /></p>
+<p>Lastly, I was interested in how the ratings break down by the taster; do some tasters rate wines on average higher than others? The table shows us that, yes, they do.</p>
+<table class="gmisc_table" style="border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;">
+<thead>
+<tr>
+<td colspan="6" style="text-align: left;">
+Average ratings by tasters. Tiers are defined by the number of wines contributed (by country). The number of wines tasted by the taster is given in parentheses. A total of 129,971 wines were rated in the dataset: 96,137 in Tier 1 (producing more than 1,000 wines); 31,267 in Tier 2 (producing between 100 and 1,000 wines); 2,567 in Tier 3 (producing less than 100 wines). Tier 1 wines seem to have higher average ratings than lower tiers, though these differences are slight.
+</td>
+</tr>
+<tr>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey;">
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Overall average rating
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Taster
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Tier 1
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Tier 2
+</th>
+<th style="border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;">
+Tier 3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">
+1
+</td>
+<td style="background-color: #CD5C5C; text-align: center;">
+90.56 (3685)
+</td>
+<td style="text-align: center;">
+Anne Krebiehl MW
+</td>
+<td style="background-color: #CD5C5C; text-align: center;">
+90.54 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="background-color: #CD5C5C; text-align: center;">
+91.47 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+2
+</td>
+<td style="background-color: #D46E61; text-align: center;">
+90.01 (6332)
+</td>
+<td style="text-align: center;">
+Matt Kettmann
+</td>
+<td style="background-color: #D26960; text-align: center;">
+90.01 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="text-align: center;">
+–
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+3
+</td>
+<td style="background-color: #DD8769; text-align: center;">
+89.21 (9537)
+</td>
+<td style="text-align: center;">
+Virginie Boone
+</td>
+<td style="background-color: #DA7D66; text-align: center;">
+89.21 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="text-align: center;">
+–
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+4
+</td>
+<td style="background-color: #DF8A6B; text-align: center;">
+89.1 (514)
+</td>
+<td style="text-align: center;">
+Mike DeSimone
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="background-color: #ECAE76; text-align: center;">
+89.61 (1)
+</td>
+<td style="background-color: #E08E6C; text-align: center;">
+88.43 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+5
+</td>
+<td style="background-color: #DF8B6B; text-align: center;">
+89.08 (9532)
+</td>
+<td style="text-align: center;">
+Paul Gregutt
+</td>
+<td style="background-color: #DB8067; text-align: center;">
+89.07 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="background-color: #D97C66; text-align: center;">
+89.58 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+6
+</td>
+<td style="background-color: #E1916D; text-align: center;">
+88.87 (10776)
+</td>
+<td style="text-align: center;">
+Kerin O’Keefe
+</td>
+<td style="background-color: #DD8569; text-align: center;">
+88.87 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="text-align: center;">
+–
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+7
+</td>
+<td style="background-color: #E3956E; text-align: center;">
+88.76 (4966)
+</td>
+<td style="text-align: center;">
+Sean P. Sullivan
+</td>
+<td style="background-color: #DE886A; text-align: center;">
+88.75 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="background-color: #D46F62; text-align: center;">
+90.34 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+8
+</td>
+<td style="background-color: #E3966E; text-align: center;">
+88.71 (25514)
+</td>
+<td style="text-align: center;">
+Roger Voss
+</td>
+<td style="background-color: #DE896A; text-align: center;">
+88.71 (1)
+</td>
+<td style="background-color: #F1BD7B; text-align: center;">
+89 (1)
+</td>
+<td style="background-color: #FFEC8B; text-align: center;">
+82.5 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+9
+</td>
+<td style="background-color: #E4996F; text-align: center;">
+88.63 (4177)
+</td>
+<td style="text-align: center;">
+Jim Gordon
+</td>
+<td style="background-color: #DF8B6B; text-align: center;">
+88.63 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="text-align: center;">
+–
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+10
+</td>
+<td style="background-color: #E59B70; text-align: center;">
+88.54 (5147)
+</td>
+<td style="text-align: center;">
+Joe Czerwinski
+</td>
+<td style="background-color: #E1906C; text-align: center;">
+88.4 (1)
+</td>
+<td style="background-color: #F4C67E; text-align: center;">
+88.61 (1)
+</td>
+<td style="background-color: #E69E71; text-align: center;">
+87.45 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+11
+</td>
+<td style="background-color: #E69F71; text-align: center;">
+88.42 (4415)
+</td>
+<td style="text-align: center;">
+Anna Lee C. Iijima
+</td>
+<td style="background-color: #E08E6C; text-align: center;">
+88.5 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="background-color: #EAA975; text-align: center;">
+86.74 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+12
+</td>
+<td style="background-color: #E7A272; text-align: center;">
+88.32 (491)
+</td>
+<td style="text-align: center;">
+Jeff Jenssen
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="background-color: #FFEC8B; text-align: center;">
+87 (1)
+</td>
+<td style="background-color: #E1906C; text-align: center;">
+88.32 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+13
+</td>
+<td style="background-color: #EDB177; text-align: center;">
+87.83 (6)
+</td>
+<td style="text-align: center;">
+Christina Pickard
+</td>
+<td style="background-color: #EEB679; text-align: center;">
+86.8 (1)
+</td>
+<td style="background-color: #CD5C5C; text-align: center;">
+93 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+14
+</td>
+<td style="background-color: #EDB277; text-align: center;">
+87.8 (26244)
+</td>
+<td style="text-align: center;">
+NA
+</td>
+<td style="background-color: #E69E71; text-align: center;">
+87.81 (1)
+</td>
+<td style="background-color: #FEEA8A; text-align: center;">
+87.1 (1)
+</td>
+<td style="background-color: #EAAA75; text-align: center;">
+86.71 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+15
+</td>
+<td style="background-color: #EDB378; text-align: center;">
+87.74 (1835)
+</td>
+<td style="text-align: center;">
+Lauren Buzzeo
+</td>
+<td style="background-color: #EDB278; text-align: center;">
+86.96 (1)
+</td>
+<td style="background-color: #F7D182; text-align: center;">
+88.13 (1)
+</td>
+<td style="background-color: #D77564; text-align: center;">
+90 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+16
+</td>
+<td style="background-color: #F6CC80; text-align: center;">
+86.91 (15134)
+</td>
+<td style="text-align: center;">
+Michael Schachner
+</td>
+<td style="background-color: #EDB378; text-align: center;">
+86.93 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="background-color: #EFB97A; text-align: center;">
+85.76 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+17
+</td>
+<td style="background-color: #F6CD81; text-align: center;">
+86.89 (27)
+</td>
+<td style="text-align: center;">
+Fiona Adams
+</td>
+<td style="background-color: #EEB478; text-align: center;">
+86.89 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="text-align: center;">
+–
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+18
+</td>
+<td style="background-color: #F8D583; text-align: center;">
+86.61 (1084)
+</td>
+<td style="text-align: center;">
+Susan Kostrzewa
+</td>
+<td style="background-color: #FFEC8B; text-align: center;">
+84.47 (1)
+</td>
+<td style="background-color: #FDE488; text-align: center;">
+87.34 (1)
+</td>
+<td style="background-color: #EEB579; text-align: center;">
+85.97 (1)
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+19
+</td>
+<td style="background-color: #FADC86; text-align: center;">
+86.4 (139)
+</td>
+<td style="text-align: center;">
+Carrie Dykes
+</td>
+<td style="background-color: #F1BF7C; text-align: center;">
+86.4 (1)
+</td>
+<td style="text-align: center;">
+–
+</td>
+<td style="text-align: center;">
+–
+</td>
+</tr>
+<tr>
+<td style="border-bottom: 2px solid grey; text-align: left;">
+20
+</td>
+<td style="background-color: #FFEC8B; border-bottom: 2px solid grey; text-align: center;">
+85.86 (415)
+</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+Alexander Peartree
+</td>
+<td style="background-color: #F5CC80; border-bottom: 2px solid grey; text-align: center;">
+85.86 (1)
+</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+–
+</td>
+<td style="border-bottom: 2px solid grey; text-align: center;">
+–
+</td>
+</tr>
+</tbody>
+</table>
+<div id="code" class="section level3">
+<h3>Code:</h3>
+<pre class="r"><code>library(tidyverse)
+library(ggthemes)
+library(treemapify)
+library(kableExtra)
+library(formattable)
+library(condformat)
+library(ggalluvial)
+library(GGally)
+
+wine_ratings &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-05-28/winemag-data-130k-v2.csv&quot;) %&gt;%
+  dplyr::select(-1)
+
+# number of wines by country
+n_wines = wine_ratings %&gt;%
+  select(country, designation) %&gt;%
+  distinct() %&gt;%
+  group_by(country) %&gt;%
+  summarise(wines = n()) %&gt;%
+  arrange(desc(wines)) %&gt;%
+  mutate(tier = ifelse(wines &gt; 1000, 1, 
+                       ifelse(wines &lt; 100, 3, 2)))
+
+# country-wise average price
+wine_ratings = wine_ratings %&gt;%
+  group_by(country) %&gt;%
+  mutate(med_price = median(price, na.rm = T),
+         med_rating = median(points, na.rm = T)) %&gt;%
+  ungroup() %&gt;%
+  filter(!is.na(med_price)) %&gt;%
+  left_join(n_wines, by = &quot;country&quot;)
+
+global_median_price &lt;- median(wine_ratings$med_price)
+
+# taster ratings
+taster_ratings_tier = wine_ratings %&gt;%
+  left_join(n_wines[,1:2], by = &quot;country&quot;) %&gt;%
+  group_by(taster_name, tier) %&gt;%
+  summarise(n = n(),
+            avg_rating = mean(points)) 
+
+## treemap
+ggplot(n_wines, aes(area = wines, fill = wines, label = country,
+                    subgroup = tier)) +
+  treemapify::geom_treemap() +
+  geom_treemap_text(colour = &quot;white&quot;, 
+                    place = &quot;centre&quot;, 
+                    grow = TRUE) +
+  geom_treemap_subgroup_border(color = &quot;black&quot;) +
+  #scale_fill_gradient2(midpoint = 43, low = &quot;maroon&quot;, high = &quot;blue&quot;) +
+  labs(fill = &quot;Number of wines&quot;,
+       title = &quot;The US, France, and Italy produce the majority of wines being rated.&quot;,
+       subtitle = &quot;Out of 44 countries, the US leads with 14,184 wines, followed by Italy (6,710) and France (6,213.\nChina, Egypt, Armenia, and Slovakia each produced one wine.&quot;,
+    caption = &quot;Data Source: WineEnthusiast \nTwitter: @VanderbeekAM &quot;
+    ) +
+  theme(plot.title = element_text(size = 15, face = &quot;bold&quot;))
+
+# violin plot of ratings by country
+wine_ratings %&gt;%
+  filter(country %in% n_wines$country[1:10]) %&gt;% 
+  arrange(desc(wines)) %&gt;%
+  mutate(country = reorder(as.factor(country), wines)) %&gt;% 
+  ggplot(aes(y = points, x = country, fill = country)) +
+  geom_violin() +
+  geom_point(aes(y = med_rating)) +
+  geom_hline(yintercept = median(wine_ratings$points), linetype = &quot;dashed&quot;) +
+  viridis::scale_fill_viridis(discrete = T, alpha = 0.9) +
+  labs(
+    y = &quot;Rating&quot;,
+    x = NULL,
+    title = &quot;Distribution of wine ratings for the top 10 wine producers.&quot;,
+    subtitle = &quot;Countries are sorted by number of wines produced for the top 10 producing countries.\nThe dashed line designates the global median rating (88).&quot;,
+    caption = &quot;Data Source: WineEnthusiast \nTwitter: @VanderbeekAM &quot;
+    ) +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;,
+        axis.text.y = element_text(size = 10, face = &quot;bold&quot;),
+        axis.text.x = element_text(size = 12),
+        plot.title = element_text(size = 15, face = &quot;bold&quot;))
+
+# boxplot of prices by country and tier
+wine_ratings %&gt;%
+  mutate(country = fct_reorder(country, med_price)) %&gt;%
+  filter(country != &quot;NA&quot;) %&gt;%
+  ggplot(aes(y = log(price), x = country, fill = &quot;grey&quot;)) +
+  geom_boxplot() +
+  geom_hline(yintercept = log(global_median_price)) +
+  scale_fill_identity() +
+  scale_x_discrete()  +
+#  annotate(&quot;text&quot;, y = 6, x = 30, label = &quot;test&quot;) +
+  facet_grid(tier~., scales = &quot;free_y&quot;, space = &quot;free_y&quot;) +
+  theme_bw() +
+  labs(
+    x = NULL,
+    y = &quot;Bottle price (log-scale)&quot;,
+    title = &quot;The global median price of a bottle of wine is $28.&quot;,
+    subtitle = &quot;The distribution of wine price by country is shown below in log-scale. Note how the\nmajority of each country&#39;s price distribution falls below the global median, even in log-scale. Countries that produce more wine (Tier 1) are most responsible for this skew.&quot;,
+    caption = &quot;Data Source: WineEnthusiast \nTwitter: @VanderbeekAM &quot;
+  ) +
+  coord_flip() +
+  theme(plot.title = element_text(size = 15, face = &quot;bold&quot;),
+        plot.subtitle = element_text(size = 9),
+        axis.text.y = element_text(size = 10, face = &quot;bold&quot;),
+        panel.grid = element_blank())
+
+# table of ratings by taster
+plot_table = taster_ratings_tier %&gt;%
+  group_by(taster_name, tier) %&gt;%
+  summarise(n = n(),
+            avg_rating = mean(points)) %&gt;%
+  select(-avg_rating) %&gt;%
+  spread(key = tier, value = n, fill = &quot;--&quot;) %&gt;%
+  left_join(taster_ratings_tier %&gt;%
+              select(-n) %&gt;%
+              mutate(avg_rating = round(avg_rating, 2)) %&gt;%
+              spread(key = tier, value = avg_rating, fill = &quot;--&quot;), 
+            by = &quot;taster_name&quot;) %&gt;%
+  left_join(wine_ratings %&gt;%
+              left_join(n_wines, by = &quot;country&quot;) %&gt;%
+              group_by(taster_name) %&gt;%
+              summarise(n = n(),
+                        avg_rating = round(mean(points), 2)),
+            by = &quot;taster_name&quot;) %&gt;%
+  mutate(`1.x` = ifelse(`1.y` == &quot;--&quot;, `1.y`, paste0(`1.y`, &quot;\n(&quot;, `1.x`, &quot;)&quot;)),
+         `2.x` = ifelse(`2.y` == &quot;--&quot;, `2.y`, paste0(`2.y`, &quot;\n(&quot;, `2.x`, &quot;)&quot;)),
+         `3.x` = ifelse(`3.y` == &quot;--&quot;, `3.y`, paste0(`3.y`, &quot;\n(&quot;, `3.x`, &quot;)&quot;)),
+         n = ifelse(avg_rating == &quot;--&quot;, avg_rating, paste0(avg_rating, &quot;\n(&quot;, n, &quot;)&quot;))) %&gt;%
+  arrange(desc(n)) %&gt;%
+  `colnames&lt;-`(c(&quot;Taster&quot;, &quot;Tier 1&quot;, &quot;Tier 2&quot;, &quot;Tier 3&quot;, &quot;one&quot;, &quot;two&quot;, &quot;three&quot; , &quot;Overall average rating&quot;, &quot;overall_r&quot;)) 
+
+condformat(plot_table) %&gt;%
+  rule_fill_gradient(columns = `Tier 1`, 
+                     expression = as.numeric(one), 
+                     #limits = c(1, 25537), 
+                     low = &quot;lightgoldenrod1&quot;, 
+                     high = &quot;indianred&quot;) %&gt;%
+  rule_fill_gradient(columns = `Tier 2`, 
+                     expression = as.numeric(two), 
+                     #limits = c(1, 25537), 
+                     low = &quot;lightgoldenrod1&quot;, 
+                     high = &quot;indianred&quot;) %&gt;%
+  rule_fill_gradient(columns = `Tier 3`, 
+                     expression = as.numeric(three), 
+                     #limits = c(1, 25537), 
+                     low = &quot;lightgoldenrod1&quot;, 
+                     high = &quot;indianred&quot;) %&gt;%
+  rule_fill_gradient(columns = `Overall average rating`, 
+                     expression = as.numeric(overall_r), 
+                     #limits = c(1, 26244), 
+                     low = &quot;lightgoldenrod1&quot;, 
+                     high = &quot;indianred&quot;) %&gt;%
+  show_columns(columns = c(8, 1, 2:4)) %&gt;%
+  theme_htmlTable(caption = &quot;Average ratings by tasters. Tiers are defined by the number of wines contributed (by country). The number of wines tasted by the taster is given in parentheses. A total of 129,971 wines were rated in the dataset: 96,137 in Tier 1 (producing more than 1,000 wines); 31,267 in Tier 2 (producing between 100 and 1,000 wines); 2,567 in Tier 3 (producing less than 100 wines). Tier 1 wines seem to have higher average ratings than lower tiers, though these differences are slight.&quot;)</code></pre>
+</div>

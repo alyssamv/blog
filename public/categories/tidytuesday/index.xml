@@ -6,10 +6,20 @@
     <description>Recent content in TidyTuesday on Data-naut</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/tidytuesday/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>TidyTuesday: Wine Ratings</title>
+      <link>/post/tidytuesday-wine-ratings/</link>
+      <pubDate>Wed, 29 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tidytuesday-wine-ratings/</guid>
+      <description>I finished my first year of grad school two weeks ago and I’ve been enjoying the break before my summer work starts next Monday. As part of this time off, I’ve been able to devote a good bit of time to the Tidy Tuesday datasets and learning new figures and vizualization tools - my extracurriculars. This week’s dataset was about 130k wine tasting ratings.
+There was a lot of potential in this dataset, which includes information for each wine regarding its anem and variety, country, county/province, and other region of production, price per bottle, rating (on a scale from 0-100, but only wines with ratings above 80 are given), the name and Twitter handle of the wine taster, and notes from the taster based on their thoughts.</description>
+    </item>
     
     <item>
       <title>TidyTuesday: Global Plastic Waste Management</title>

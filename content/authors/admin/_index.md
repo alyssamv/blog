@@ -38,4 +38,6 @@ user_groups:
 - Visitors
 ---
 
-Alyssa Vanderbeek is a Master's student in Biostatistics at the Columbia University Mailman School of Public Health in New York City. Research interests include improving efficiencies in oncology drug development, development software and algorithms to advance clinical research, and exploring and visualizing data. 
+Alyssa Vanderbeek is a Master's student in Biostatistics at the Columbia University Mailman School of Public Health in New York City, set to graduate in May 2020. Research interests include improving efficiencies in oncology drug development, development software and algorithms to advance clinical research, and exploring and visualizing data. 
+
+Beginning in June 2020, Alyssa will be a PhD student at the Institute of Cancer Research, Sutton UK, in conjunction with the University of London. Dissertation work will focus on statistical design and analysis of adaptive platform trials in cancer.

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Authors on Data-naut</title>
+    <title>Authors on </title>
     <link>/authors/</link>
-    <description>Recent content in Authors on Data-naut</description>
+    <description>Recent content in Authors on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 01 Apr 2018 00:00:00 +0000</lastBuildDate>
@@ -17,7 +17,8 @@
       <pubDate>Sun, 01 Apr 2018 00:00:00 +0000</pubDate>
       
       <guid>/authors/admin/</guid>
-      <description>Alyssa Vanderbeek is a Master&amp;rsquo;s student in Biostatistics at the Columbia University Mailman School of Public Health in New York City. Research interests include improving efficiencies in oncology drug development, development software and algorithms to advance clinical research, and exploring and visualizing data.</description>
+      <description>Alyssa Vanderbeek is a Master&amp;rsquo;s student in Biostatistics at the Columbia University Mailman School of Public Health in New York City, set to graduate in May 2020. Research interests include improving efficiencies in oncology drug development, development software and algorithms to advance clinical research, and exploring and visualizing data.
+Beginning in June 2020, Alyssa will be a PhD student at the Institute of Cancer Research, Sutton UK, in conjunction with the University of London.</description>
     </item>
     
     <item>

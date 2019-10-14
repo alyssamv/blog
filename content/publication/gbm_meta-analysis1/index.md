@@ -14,7 +14,7 @@ authors:
 - Brian M. Alexander
 date: "2018-04-01T00:00:00Z"
 doi: ""
-featured: true
+featured: false
 image:
   caption: 'Image credit: [**BrainFacts**](http://www.brainfacts.org/In-the-Lab/Tools-and-Techniques/2014/Brain-Scans-Technologies-that-Peer-Inside-Your-Head)'
   focal_point: ""

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>oncology on </title>
+    <link>/categories/oncology/</link>
+    <description>Recent content in oncology on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 17 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/oncology/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Survey of early phase trial designs in oncology</title>
+      <link>/post/survey-of-early-phase-trial-designs-in-oncology/</link>
+      <pubDate>Fri, 17 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/survey-of-early-phase-trial-designs-in-oncology/</guid>
+      <description>After a few years of working with clinical trial methodology, I finally decided to put together a introductory guide to common trial designs seen in oncology drug development. The goal here is to provide (1) a brief summary of each phase and the common designs used, (2) some of the most popular areas of interest (eg randomization) and new methods that aim to address them, and (3) a summary of the biggest issues that clinicians/statisticians face in testing new agents.</description>
+    </item>
+    
+  </channel>
+</rss>

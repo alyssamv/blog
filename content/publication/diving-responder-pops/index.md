@@ -7,13 +7,10 @@ authors:
 - admin
 - Lorenzo Trippa
 - Brian M. Alexander
-date: "2015-09-01T00:00:00Z"
+date: "2019-09-01T00:00:00Z"
 doi: ""
 featured: false
 image:
-  caption: 'Image credit: [**ScienceDirect**](https://www.sciencedirect.com/topics/medicine-and-dentistry/kaplan-meier-method)'
-  focal_point: ""
-  preview_only: false
 projects: []
 publication: '*Annals of Oncology*'
 publication_short: ""
